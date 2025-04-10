@@ -11,6 +11,7 @@ models:
           - not_null
 
       - name: host_id
+        description: Host ID. References to host.
         tests:
           - not_null
           - relationships:
@@ -26,3 +27,28 @@ models:
                 'Shared room',
                 'Hotel room'
               ]
+      
+      - name: minimum_nights
+        description: '{{ doc("dim_listings_cleansed__minimum_nights") }}'
+        tests:
+          - positive_values
+  
+  - name: dim_hosts_cleansed
+    description: Cleansed hosts table based on raw src_hosts source
+    columns:
+      - name: host_id
+        description: Host ID of the host.
+        tests:
+          - not_null
+          - unique
+
+      - name: host_name
+        description: Field used to show name of host.
+        tests:
+          - not_null
+
+      - name: is_superhost
+        description: Defined if host is superhost or not.
+        tests:
+          - accepted_values:
+              values: ['t', 'f']

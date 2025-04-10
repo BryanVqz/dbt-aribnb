@@ -1,0 +1,18 @@
+version: 2
+
+exposures:
+  - name: executive_dashboard
+    label: Executive Dashboard 
+    type: dashboard
+    maturity: low
+    url: https://e16dcc27.us2a.app.preset.io/superset/dashboard/8/?native_filters_key=SHJ41J6aJyBib4iwMNEjKJmYBopzpUogq3WO90i275bkUzJx9X6EMCNQ2YIgOuUW
+    description: Exectuive dashboard with main information about Airbnb raw data.
+
+    depends_on:
+      - ref('dim_listings_with_host')
+      - ref('mart_fullmoon_reviews')
+
+    owner:
+      name: Bryan Quezada
+      email: bryan.quezada@yourdomain.com
+        

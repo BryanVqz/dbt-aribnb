@@ -17,11 +17,11 @@ test-paths: ["tests"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
+asset-paths: ["assets"]
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
-
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -33,6 +33,8 @@ models:
   # Config indicated by + and applies to all files under models/example/
   dbtlearn:
     +materialized: view
+    +post-hook: 
+      - "GRANT SELECT ON {{ this }} TO ROLE REPORTER"
     dim:
       +materialized: table
     src:
