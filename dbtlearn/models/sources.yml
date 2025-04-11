@@ -6,6 +6,17 @@ sources:
     tables:
       - name: listings
         identifier: raw_listings
+        columns:
+          - name: room_type
+            ## dbt test --select source:airbnb.listings
+            tests:
+              - dbt_expectations.expect_column_distinct_count_to_equal:
+                  value: 4
+          
+          - name: price
+            tests:
+              - dbt_expectations.expect_column_values_to_match_regex:
+                  regex: "^\\\\$[0-9][0-9\\\\.]+$" #value must start with $
       
       - name: hosts
         identifier: raw_hosts
@@ -14,5 +25,6 @@ sources:
         identifier: raw_reviews
         loaded_at_field: date
         freshness:
+        # dbt source freshness 
           warn_after: {count: 6, period: hour} ## throw error if no changer were made on the last 6 hrs
           error_after: {count: 24, period: hour} ## throw error after 24 hrs

@@ -52,3 +52,27 @@ models:
         tests:
           - accepted_values:
               values: ['t', 'f']
+      
+  - name: dim_listings_with_host
+    description: Join table from listings and host
+    tests:
+      - dbt_expectations.expect_table_row_count_to_equal_other_table:
+          compare_model: source('airbnb', 'listings')
+    columns:
+      - name: price
+        description: | 
+          In this example, the test ensures that the 95th percentile of the price
+          column in the transactions model lies between $50 and $500 considering 
+          only positive transaction amounts.
+        tests:
+          - dbt_expectations.expect_column_quantile_values_to_be_between:
+              quantile: 0.95
+              min_value: 50
+              max_value: 500
+              row_condition: "price > 0"
+          - dbt_expectations.expect_column_max_to_be_between:
+              max_value: 5000
+              config:
+                severity: warn
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: NUMBER ## see snowflake definition

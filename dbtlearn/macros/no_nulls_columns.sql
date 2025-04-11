@@ -6,6 +6,7 @@
             {{ col.column }} IS NULL OR 
         {% endfor %}
             FALSE
+            
 {% endmacro %}
 
 
