@@ -1,0 +1,9 @@
+# pip install -r requirements.txt
+
+# dbt core and Snowflake adapter
+dbt-snowflake==1.7.1
+
+# Dagster core and webserver
+dagster-dbt==0.22.0
+dagster-webserver==1.6.0
+
